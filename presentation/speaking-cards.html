@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Athena — Speaking Cards</title>
+<style>
+  :root{
+    --ink:#15211f;
+    --muted:#5c6b68;
+    --line:#d5dfdc;
+    --paper:#ffffff;
+    --wash:#eef3f1;
+    --teal:#0d8f82;
+    --teal-dark:#07685f;
+    --amber:#a96b12;
+    --mono:"Cascadia Code","Consolas",monospace;
+    --sans:"Segoe UI","Bahnschrift",Arial,sans-serif;
+    --display:"Bahnschrift","Segoe UI",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--wash);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:10pt;
+    line-height:1.38;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .sheet{
+    width:210mm;
+    min-height:297mm;
+    margin:0 auto;
+    padding:11mm 12mm;
+    background:var(--paper);
+  }
+  .brand{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:16pt;
+    letter-spacing:-.02em;
+    line-height:1;
+  }
+  .brand span{color:var(--teal)}
+  .kicker{
+    font-family:var(--mono);
+    font-size:7.5pt;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    margin-top:3mm;
+  }
+  h1{
+    font-family:var(--display);
+    font-size:30pt;
+    line-height:1.02;
+    letter-spacing:-.025em;
+    margin:8mm 0 0;
+    max-width:150mm;
+  }
+  h1 em{font-style:normal;color:var(--teal)}
+  .lede{
+    font-size:11.5pt;
+    line-height:1.45;
+    color:#33423f;
+    max-width:155mm;
+    margin:5mm 0 0;
+  }
+  .meta{
+    display:flex;
+    gap:3mm;
+    flex-wrap:wrap;
+    margin-top:6mm;
+  }
+  .pill{
+    font-family:var(--mono);
+    font-size:7.5pt;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:1.4mm 3mm;
+    color:var(--muted);
+  }
+  .rule{
+    height:1px;
+    background:var(--line);
+    margin:8mm 0;
+  }
+  .cover-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8mm;
+    margin-top:2mm;
+  }
+  h2{
+    font-family:var(--display);
+    font-size:12pt;
+    letter-spacing:-.01em;
+    margin:0 0 2.5mm;
+  }
+  .cheat{
+    border:1px solid var(--line);
+    border-radius:3mm;
+    padding:4mm 4.5mm;
+    background:#f7faf9;
+  }
+  .cheat dl{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:1.4mm 4mm;
+    margin:0;
+  }
+  .cheat dt{color:var(--muted)}
+  .cheat dd{margin:0;font-family:var(--mono);font-size:8.5pt;font-weight:600}
+  .run{
+    border:1px solid var(--line);
+    border-radius:3mm;
+    padding:4mm 4.5mm;
+  }
+  .run ol{
+    margin:0;
+    padding-left:5mm;
+    columns:1;
+  }
+  .run li{
+    margin:0 0 1.2mm;
+    break-inside:avoid;
+  }
+  .run li span{color:var(--muted)}
+  .run li b{font-weight:600}
+  .note{
+    margin-top:8mm;
+    padding:3.5mm 4mm;
+    border-left:3px solid var(--teal);
+    background:#f2f8f6;
+    color:#33423f;
+    font-size:9pt;
+  }
+  .page-break{break-after:page;page-break-after:always}
+
+  /* ---------- cards ---------- */
+  .card{
+    border:1px solid var(--line);
+    border-top:3.5px solid var(--teal);
+    border-radius:2.5mm;
+    padding:5mm 5.5mm 4.5mm;
+    margin:0 0 6mm;
+    background:var(--paper);
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+  .card:last-child{margin-bottom:0}
+  .card-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:4mm;
+  }
+  .card-num{
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:.12em;
+    color:var(--teal-dark);
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .card-time{
+    font-family:var(--mono);
+    font-size:7.5pt;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:.8mm 2.4mm;
+    white-space:nowrap;
+  }
+  .card h3{
+    font-family:var(--display);
+    font-size:15pt;
+    line-height:1.05;
+    letter-spacing:-.015em;
+    margin:1.2mm 0 0;
+  }
+  .thesis{
+    font-size:10.5pt;
+    font-weight:600;
+    color:#263532;
+    margin:2mm 0 0;
+  }
+  .say{
+    margin:2.6mm 0 2.4mm;
+    padding:2.4mm 3mm;
+    border-left:3px solid var(--teal);
+    background:#f3f9f7;
+    font-size:9.8pt;
+    line-height:1.4;
+    color:#25332f;
+  }
+  .say b{
+    font-family:var(--mono);
+    font-size:7pt;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    display:block;
+    margin-bottom:.6mm;
+  }
+  .beats{
+    margin:0;
+    padding-left:4.2mm;
+  }
+  .beats li{
+    margin:0 0 1.2mm;
+    padding-left:.5mm;
+  }
+  .beats li::marker{color:var(--teal)}
+  .beats code{
+    font-family:var(--mono);
+    font-size:8.6pt;
+    background:#eef4f2;
+    padding:0 .6mm;
+    border-radius:.8mm;
+  }
+  .cue{
+    margin:2mm 0 0;
+    font-size:8.8pt;
+    color:var(--amber);
+    font-style:italic;
+  }
+  .card-foot{
+    display:grid;
+    grid-template-columns:1.05fr 1.2fr;
+    gap:3mm 5mm;
+    margin-top:2.8mm;
+    padding-top:2.4mm;
+    border-top:1px solid var(--line);
+  }
+  .foot-item .label{
+    font-family:var(--mono);
+    font-size:6.8pt;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:block;
+    margin-bottom:.5mm;
+  }
+  .foot-item p{margin:0;font-size:9pt}
+  .land p{font-weight:600;color:var(--teal-dark)}
+  .one-liner{
+    grid-column:1 / -1;
+    font-size:8.8pt;
+    color:#4a5a57;
+  }
+  .one-liner b{
+    font-family:var(--mono);
+    font-size:6.8pt;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-right:1.2mm;
+  }
+
+  /* ---------- Q&A ---------- */
+  .qa{
+    border:1px solid var(--line);
+    border-radius:2.5mm;
+    padding:3mm 4mm;
+    margin:0 0 2.5mm;
+    break-inside:avoid;
+  }
+  .qa h3{
+    font-family:var(--display);
+    font-size:10.5pt;
+    margin:0 0 1mm;
+  }
+  .qa p{margin:0;color:#33423f;font-size:9.2pt}
+
+  @media print{
+    @page{size:A4;margin:9mm 10mm}
+    body{background:#fff}
+    .sheet{
+      width:auto;
+      min-height:0;
+      margin:0;
+      padding:0;
+      box-shadow:none;
+    }
+    .card,.qa,.cheat,.run,.note{box-shadow:none}
+    .no-print{display:none}
+  }
+  @media screen{
+    .sheet{box-shadow:0 1px 3px rgba(0,0,0,.08),0 12px 40px rgba(0,0,0,.07);margin:8mm auto}
+    .print-tip{
+      max-width:210mm;
+      margin:0 auto 4mm;
+      padding:3mm 4mm;
+      font-size:8.5pt;
+      color:#4a5a57;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:2mm;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-tip no-print">Print at A4, 100% scale. Each card is kept intact; two cards fit on a page. Use the one-liner if you are running short.</div>
+
+<!-- ================= COVER / RUN OF SHOW ================= -->
+<div class="sheet page-break" id="cover">
+  <div class="brand">athena<span>.</span></div>
+  <div class="kicker">Speaking cards · NCRB crimes against women · 2001–2021</div>
+  <h1>Thirteen cards.<br><em>One document story.</em></h1>
+  <p class="lede">A card per slide: the thesis, an opening line, the beats to hit, the number to land, and the transition. The deck follows one state-year fact from the document model to the read model.</p>
+  <div class="meta">
+    <span class="pill">13 slides</span>
+    <span class="pill">~12 minutes</span>
+    <span class="pill">NoSQL only</span>
+    <span class="pill">Print A4</span>
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="cover-grid">
+    <section class="cheat">
+      <h2>Numbers to have ready</h2>
+      <dl>
+        <dt>Documents</dt><dd>736</dd>
+        <dt>States / UTs</dt><dd>36</dd>
+        <dt>Years</dt><dd>2001–2021</dd>
+        <dt>Crime heads</dt><dd>7</dd>
+        <dt>Recorded cases</dt><dd>4,867,722</dd>
+        <dt>UP 2021 total</dt><dd>2,212</dd>
+        <dt>Top state</dt><dd>UP · 529,734</dd>
+        <dt>Second</dt><dd>MP · 413,157</dd>
+        <dt>Third</dt><dd>WB · 409,242</dd>
+        <dt>National 2001</dt><dd>128,537</dd>
+        <dt>National 2021</dt><dd>348,092</dd>
+        <dt>Growth</dt><dd>+170.8%</dd>
+      </dl>
+    </section>
+
+    <section class="run">
+      <h2>Run of show</h2>
+      <ol>
+        <li><b>Cover</b> <span>0:45</span></li>
+        <li><b>Why a document store</b> <span>1:00</span></li>
+        <li><b>The data grain</b> <span>0:50</span></li>
+        <li><b>Document anatomy</b> <span>1:00</span></li>
+        <li><b>Collections &amp; schema</b> <span>0:55</span></li>
+        <li><b>Write path</b> <span>0:55</span></li>
+        <li><b>Indexes</b> <span>0:50</span></li>
+        <li><b>Access layer</b> <span>1:05</span></li>
+        <li><b>Query console</b> <span>1:10</span></li>
+        <li><b>Aggregation</b> <span>0:55</span></li>
+        <li><b>Representation</b> <span>0:55</span></li>
+        <li><b>Trade-offs &amp; scale</b> <span>0:50</span></li>
+        <li><b>Close</b> <span>0:40</span></li>
+      </ol>
+    </section>
+  </div>
+
+  <div class="note"><b>If you have five minutes:</b> use cards 01, 03, 04, 08, 10 and 13. The through-line is one document holds the fact, one function reads it, one pipeline shapes it, one payload represents it.</div>
+</div>
+
+<!-- ================= 01 ================= -->
+<div class="sheet" id="s1">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 01 · Cover</span>
+      <span class="card-time">0:45</span>
+    </div>
+    <h3>Athena.</h3>
+    <p class="thesis">A deliberately narrow NoSQL walkthrough of one dataset: NCRB crimes against women, 2001–2021.</p>
+    <div class="say"><b>Say</b>“Athena is a NoSQL-backed console for NCRB state-level crimes against women, 2001 to 2021. This deck is deliberately narrow: we follow one fact — one state, one year, seven crimes — all the way through the document model, the write path, indexes, the access layer, query and aggregation, and finally representation.”</div>
+    <ul class="beats">
+      <li>Point to the document card: “This is the actual shape of one MongoDB document, not a mock-up of the UI.”</li>
+      <li>The deck is about how NoSQL is used — not a product pitch.</li>
+      <li>Four anchors: 736 documents, 36 states and UTs, 7 crime heads, 2001–2021.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>4,867,722 recorded cases, stored as 736 documents.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“Let’s start with why this data wants to be a document in the first place.”</p></div>
+      <div class="one-liner"><b>One-liner</b>Athena turns a state-year crime fact into one MongoDB document, then reads it without a join.</div>
+    </div>
+  </article>
+
+  <!-- ================= 02 ================= -->
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 02 · Why a document store</span>
+      <span class="card-time">1:00</span>
+    </div>
+    <h3>Why a document store.</h3>
+    <p class="thesis">The NCRB row is already a complete fact; a document keeps it whole.</p>
+    <div class="say"><b>Say</b>“The argument is not that NoSQL is fashionable. It’s that the NCRB row is already a complete fact: one state, one year, seven crimes against women.”</div>
+    <ul class="beats">
+      <li>A relational schema would split that fact across <code>records</code>, <code>states</code>, and <code>crime_types</code>, then join it back on every read.</li>
+      <li>The document model stores the fact once; the read is one fetch.</li>
+      <li>Trade-off: shared vocabulary is referenced, not embedded. Labels and colors live in small collections.</li>
+      <li>Point to the comparison: “One document versus three tables and a join.”</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>“The unit of storage matches the unit of meaning.”</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“So what exactly is one document?”</p></div>
+      <div class="one-liner"><b>One-liner</b>One state-year fact, one document — no reassembly on read.</div>
+    </div>
+  </article>
+</div>
+
+<!-- ================= 03 ================= -->
+<div class="sheet" id="s2">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 03 · The data grain</span>
+      <span class="card-time">0:50</span>
+    </div>
+    <h3>The data grain.</h3>
+    <p class="thesis">One document = one state or UT × one year × seven crime heads.</p>
+    <div class="say"><b>Say</b>“The source is the NCRB state-level table for crimes against women, 2001 to 2021. After normalization, the fact collection has 736 documents.”</div>
+    <ul class="beats">
+      <li>36 states and UTs across 21 years. Early years cover 34 entities, which is why the count is 736, not 756.</li>
+      <li>The seven measures: rape, kidnapping and assault, dowry deaths, assault on women, insult to modesty, domestic violence, trafficking.</li>
+      <li><code>total</code> is derived per document and stored.</li>
+      <li>Caveat: the NCRB reclassified categories after 2014, so large swings around that date may be reporting changes, not incidence.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>736 facts; 4.87 million recorded cases.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“Here is what one of those documents actually looks like.”</p></div>
+      <div class="one-liner"><b>One-liner</b>One state, one year, seven crimes, one stored total.</div>
+    </div>
+  </article>
+
+  <!-- ================= 04 ================= -->
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 04 · Document anatomy</span>
+      <span class="card-time">1:00</span>
+    </div>
+    <h3>Document anatomy.</h3>
+    <p class="thesis">The document is homogeneous by contract; <code>state</code> + <code>year</code> is the identity.</p>
+    <div class="say"><b>Say</b>“This is the actual MongoDB document for Uttar Pradesh in 2021 — not an illustration.”</div>
+    <ul class="beats">
+      <li><code>state</code> and <code>year</code> form the composite key; together they are unique.</li>
+      <li>The seven crime fields are the measures. Zero is a real observation — “none reported” — not missing data.</li>
+      <li>Walk the total: 2,212 cases — 534 rape, 402 kidnapping and assault, 72 dowry deaths, 655 assault on women, 13 insult to modesty, 519 domestic violence, 17 trafficking.</li>
+      <li><code>_id</code> is projected out; it is storage, not part of the application contract.</li>
+      <li>The shape is identical for all 736 documents. MongoDB does not enforce it — the ETL does.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>One document carries the whole fact; nothing to reassemble on read.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“If that’s the fact, what else is in the database?”</p></div>
+      <div class="one-liner"><b>One-liner</b>The document is the fact, and its shape is guaranteed by the ETL.</div>
+    </div>
+  </article>
+</div>
+
+<!-- ================= 05 ================= -->
+<div class="sheet" id="s3">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 05 · Collections &amp; schema</span>
+      <span class="card-time">0:55</span>
+    </div>
+    <h3>Four collections.</h3>
+    <p class="thesis">One fact collection, two vocabularies, one metadata collection.</p>
+    <div class="say"><b>Say</b>“Four collections carry the data layer.”</div>
+    <ul class="beats">
+      <li><code>crime_records</code> is the fact collection — 736 documents.</li>
+      <li><code>states</code> and <code>crime_types</code> are the vocabulary. They exist for inspection and future joins; today the app pulls labels and colors from <code>CRIME_META</code> in code.</li>
+      <li><code>metadata</code> stores the years and states arrays that the API reads alongside the facts.</li>
+      <li>Design rule: embed the measures because they are always read together; reference the vocabulary because duplicating labels into 736 documents makes updates harder.</li>
+      <li>Point to the four chips: embed, reference, materialize, validate.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>Embed the fact, reference the vocabulary.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“Now, how does a row get in there safely?”</p></div>
+      <div class="one-liner"><b>One-liner</b>One fact collection, two vocabularies, one metadata document set.</div>
+    </div>
+  </article>
+
+  <!-- ================= 06 ================= -->
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 06 · Write path</span>
+      <span class="card-time">0:55</span>
+    </div>
+    <h3>Write path.</h3>
+    <p class="thesis">Normalize once, upsert by the grain; the import is idempotent.</p>
+    <div class="say"><b>Say</b>“Two scripts do the work, and the raw CSV is never served to the browser.”</div>
+    <ul class="beats">
+      <li><code>normalize-csv.mjs</code> parses the raw CSV, aliases 37 state spellings into 36 canonical entities, validates every numeric field, drops duplicates, and derives <code>total</code>.</li>
+      <li><code>import-mongo.mjs</code> bulk-writes each record with <code>replaceOne</code> and <code>upsert</code>, keyed on <code>{state, year}</code>, seeds the lookup collections, and creates the indexes.</li>
+      <li>Re-running the import does not duplicate facts; the filter is the grain.</li>
+      <li>The total is computed once at write time, not on every read.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>One write per fact; idempotent by construction.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“That unique key is also the first index.”</p></div>
+      <div class="one-liner"><b>One-liner</b>Normalize once, upsert by state and year, rerun safely.</div>
+    </div>
+  </article>
+</div>
+
+<!-- ================= 07 ================= -->
+<div class="sheet" id="s4">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 07 · Indexes</span>
+      <span class="card-time">0:50</span>
+    </div>
+    <h3>The grain is the index.</h3>
+    <p class="thesis">The unique compound index is the integrity rule.</p>
+    <div class="say"><b>Say</b>“Three indexes are created by the import script, not at request time.”</div>
+    <ul class="beats">
+      <li>Unique compound <code>{state: 1, year: 1}</code>: one fact per state-year, duplicate writes rejected, and the upsert stays safe.</li>
+      <li><code>{year: 1}</code>: bounded year windows and timeline slices.</li>
+      <li><code>{state: 1}</code>: one state across all 21 years, plus the state dossier route.</li>
+      <li>Point to the planner panel: “State plus year is an <code>IXSCAN</code> then one document fetch; a year range is a bounded scan; a state <code>$in</code> is one seek per value.”</li>
+      <li>Honest note: at 736 documents the app also reads the whole collection once. These are the shapes for direct queries and for scale.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>“Integrity, not just speed.”</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“Indexes only matter if the access layer uses them. Here is the one function every route calls.”</p></div>
+      <div class="one-liner"><b>One-liner</b>The unique state-year index is what makes the upsert safe.</div>
+    </div>
+  </article>
+
+  <!-- ================= 08 ================= -->
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 08 · Access layer</span>
+      <span class="card-time">1:05</span>
+    </div>
+    <h3>One function hides the database.</h3>
+    <p class="thesis">Every route calls <code>getStore()</code> and gets the same shape.</p>
+    <div class="say"><b>Say</b>“This is the single most important code path in the deck. Every API route calls <code>getStore()</code>.”</div>
+    <ul class="beats">
+      <li>If <code>MONGODB_URI</code> is set, connect with a 4-second server selection timeout. Fail fast; never hang a page request.</li>
+      <li>Read <code>crime_records</code> with <code>{_id: 0}</code>, then read the <code>metadata</code> years and states.</li>
+      <li>Cache the <code>Store</code> in module scope. A warm process does not re-read 736 documents on every request.</li>
+      <li>If the URI is missing, the connection fails, or the collection is empty, fall through to bundled JSON. The <code>source</code> field records which path answered.</li>
+      <li>Store shape: <code>records</code>, <code>years</code>, <code>states</code>, <code>crimeList</code>, <code>source</code>.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>“One read per process, not per request.”</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“With that layer in place, the query console becomes four native patterns.”</p></div>
+      <div class="one-liner"><b>One-liner</b>One cached <code>getStore()</code>, one shape, with a seed fallback.</div>
+    </div>
+  </article>
+</div>
+
+<!-- ================= 09 ================= -->
+<div class="sheet" id="s5">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 09 · Query console · interactive</span>
+      <span class="card-time">1:10</span>
+    </div>
+    <h3>Query documents, not tables.</h3>
+    <p class="thesis">Four access patterns cover the app; each is a native MongoDB query.</p>
+    <div class="say"><b>Say</b>“This slide is interactive. The tabs switch between the four access patterns that cover the app.”</div>
+    <ul class="beats">
+      <li><b>Point lookup:</b> <code>{state: "Uttar Pradesh", year: 2021}</code> → 1 document, total 2,212, <code>IXSCAN</code> on the compound index.</li>
+      <li><b>Year range:</b> bounded scan on <code>{year: 1}</code> — for example, 2014 to 2021.</li>
+      <li><b>State filter:</b> <code>$in</code> on a set of states; one seek per value on <code>{state: 1}</code>.</li>
+      <li><b>Top states:</b> group by state and sum <code>total</code>. Uttar Pradesh 529,734; Madhya Pradesh 413,157; West Bengal 409,242.</li>
+      <li>No joins, no ORM. The result is already the document shape.</li>
+    </ul>
+    <p class="cue">Stage cue: click Year range, then Top states. Leave Point lookup up if you are short on time.</p>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>Four questions, four index paths, zero joins.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“The top-states tab is an aggregation. Let’s look at the pipeline behind it.”</p></div>
+      <div class="one-liner"><b>One-liner</b>Point lookup, year range, state filter, top states — all native queries.</div>
+    </div>
+  </article>
+
+  <!-- ================= 10 ================= -->
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 10 · Aggregation</span>
+      <span class="card-time">0:55</span>
+    </div>
+    <h3>Aggregation is the read model.</h3>
+    <p class="thesis">The pipeline is match, group, sort, project.</p>
+    <div class="say"><b>Say</b>“This is the NoSQL read model at its most useful.”</div>
+    <ul class="beats">
+      <li><code>$match</code> clamps the year window before any grouping work.</li>
+      <li><code>$group</code> folds all 736 documents into one bucket per year and sums <code>total</code>.</li>
+      <li><code>$sort</code> puts the 21 output documents in chronological order.</li>
+      <li><code>$project</code> returns only <code>year</code> and <code>cases</code>.</li>
+      <li>The result: 21 points. 2001 is 128,537; 2021 is 348,092; that is +170.8%.</li>
+      <li>Honest note: at this size the app reads once and folds in process. The pipeline is the server-side path for scale and selective queries.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>One pipeline, 21 points, no client-side number crunching.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“The last step is representation: how those documents become one payload.”</p></div>
+      <div class="one-liner"><b>One-liner</b>Match, group, sort, project — 736 documents into 21 points.</div>
+    </div>
+  </article>
+</div>
+
+<!-- ================= 11 ================= -->
+<div class="sheet" id="s6">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 11 · Representation</span>
+      <span class="card-time">0:55</span>
+    </div>
+    <h3>Stored as documents. Read as one payload.</h3>
+    <p class="thesis">JSON all the way down: document → Store → DashboardPayload.</p>
+    <div class="say"><b>Say</b>“Representation here is not a UI concern; it’s a data-shape concern.”</div>
+    <ul class="beats">
+      <li>A BSON document leaves the collection as a plain JavaScript object with the same keys.</li>
+      <li><code>getStore()</code> wraps the array in a <code>Store</code> with years, states, the crime list, and a source flag.</li>
+      <li>The API projects the Store into one <code>DashboardPayload</code>: meta, hero, national series, rankings, crime composition, insights.</li>
+      <li>No object-relational mapping and no join; the document shape survives from disk to response.</li>
+      <li>The payload is UI-shaped, but every array in it is derived from the same 736 documents.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>“One read, one object, one response.”</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“So why is this the right model at this scale — and what changes when it grows?”</p></div>
+      <div class="one-liner"><b>One-liner</b>The document shape survives all the way from disk to response.</div>
+    </div>
+  </article>
+
+  <!-- ================= 12 ================= -->
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 12 · Trade-offs &amp; scale</span>
+      <span class="card-time">0:50</span>
+    </div>
+    <h3>Why this model holds.</h3>
+    <p class="thesis">Embed, reference, materialize, cache — and scale by extending, not rewriting.</p>
+    <div class="say"><b>Say</b>“This is the honest summary of the NoSQL design.”</div>
+    <ul class="beats">
+      <li>Embed the measures because they are read together.</li>
+      <li>Reference labels and colors because they are shared.</li>
+      <li>Materialize <code>total</code> and the filter arrays because recomputing them adds no information.</li>
+      <li>Cache the Store: at 736 documents, one collection read beats a database round-trip per filter.</li>
+      <li>Scale path: shard on state, move aggregation server-side, add district-level documents with the same grain principle.</li>
+      <li>What we did not build: a collection per crime head, a join table, or a client-side database.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>Small now, but the grain and the access path scale.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“Close on the architecture, not on a claim.”</p></div>
+      <div class="one-liner"><b>One-liner</b>Embed the fact, reference the vocabulary, cache the read, shard by state later.</div>
+    </div>
+  </article>
+</div>
+
+<!-- ================= 13 + Q&A ================= -->
+<div class="sheet" id="s7">
+  <article class="card">
+    <div class="card-head">
+      <span class="card-num">Card 13 · Close</span>
+      <span class="card-time">0:40</span>
+    </div>
+    <h3>Close on the architecture.</h3>
+    <p class="thesis">Model the fact, write it once, index the grain, access through one layer, represent as one payload.</p>
+    <div class="say"><b>Say</b>“Close on the architecture, not on a claim.”</div>
+    <ul class="beats">
+      <li>Model the state-year fact as one document.</li>
+      <li>Write it once with an idempotent upsert.</li>
+      <li>Index the grain.</li>
+      <li>Access it through one cached Store.</li>
+      <li>Represent it as one payload.</li>
+    </ul>
+    <div class="card-foot">
+      <div class="foot-item land"><span class="label">Land</span><p>A small document store, a projection-based access layer, and a read model that is JSON all the way down.</p></div>
+      <div class="foot-item"><span class="label">Move</span><p>“Questions?”</p></div>
+      <div class="one-liner"><b>One-liner</b>One document, one upsert, one index, one Store, one payload.</div>
+    </div>
+  </article>
+
+  <div class="rule"></div>
+
+  <h2>Likely questions</h2>
+
+  <section class="qa">
+    <h3>“Why not just use Postgres?”</h3>
+    <p>At this size, either works. The document model wins because the fact is already one row-shaped object and the app never needs a join. If the access pattern changed to heavy ad-hoc relational reporting, a relational store would be a fair choice.</p>
+  </section>
+
+  <section class="qa">
+    <h3>“736 documents is tiny. Why talk about indexes and sharding?”</h3>
+    <p>It is tiny, and the deck says so. That is why the app reads once and caches. The indexes and pipeline show the access paths that matter when the collection grows — not a claim that 736 documents need sharding.</p>
+  </section>
+
+  <section class="qa">
+    <h3>“How do you stop bad documents getting in?”</h3>
+    <p>The ETL validates every numeric field and normalizes the shape. MongoDB itself does not enforce the schema here; the contract is enforced at write time. A production version could add MongoDB JSON Schema validation as a second line of defence.</p>
+  </section>
+
+  <section class="qa">
+    <h3>“What about the NCRB data quality caveats?”</h3>
+    <p>These are reported cases, not incidence. The NCRB reclassified categories after 2014, so some swings around that date are reporting changes. Zero means none reported, not missing.</p>
+  </section>
+
+  <section class="qa">
+    <h3>“Where do the dashboard numbers come from?”</h3>
+    <p>The same 736 documents. <code>getStore()</code> returns the Store, the API projects it into one DashboardPayload, and every chart is derived from that payload. There is no separate analytics database.</p>
+  </section>
+
+  <section class="qa">
+    <h3>“Why keep <code>states</code> and <code>crime_types</code> if the code uses <code>CRIME_META</code>?”</h3>
+    <p>They are provisioned for inspection and future joins. Today <code>CRIME_META</code> is the source of labels and colors; the collections make the vocabulary explicit and give the data layer a place to grow.</p>
+  </section>
+</div>
+
+</body>
+</html>
+

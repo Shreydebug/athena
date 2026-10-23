@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# runtime local state (fallback auth store, saved views)
+/var
+
+# dev server logs
+*.log
+
+# generated deck/media assets
+/deck-assets
+/presentation/*.png
+/*.pptx
+/heatmap.png
+

@@ -1,0 +1,37 @@
+[
+  {
+    "key": "rape",
+    "label": "Rape",
+    "color": "#00F5D4"
+  },
+  {
+    "key": "kidnapAssault",
+    "label": "Kidnap & Assault",
+    "color": "#64FFDA"
+  },
+  {
+    "key": "dowryDeaths",
+    "label": "Dowry Deaths",
+    "color": "#8B5CF6"
+  },
+  {
+    "key": "assaultWomen",
+    "label": "Assault Against Women",
+    "color": "#FFD166"
+  },
+  {
+    "key": "assaultModesty",
+    "label": "Assault on Modesty",
+    "color": "#FF4D6D"
+  },
+  {
+    "key": "domesticViolence",
+    "label": "Domestic Violence",
+    "color": "#38BDF8"
+  },
+  {
+    "key": "trafficking",
+    "label": "Women Trafficking",
+    "color": "#F472B6"
+  }
+]
