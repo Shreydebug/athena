@@ -1,5 +1,5 @@
 /**
- * CRIMESCAPE ETL — Stage 2: Import seed JSON into MongoDB.
+ * ATHENA ETL — Stage 2: Import seed JSON into MongoDB.
  *
  * Usage:
  *   MONGODB_URI="mongodb+srv://user:pass@cluster/..." npm run import:mongo
@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const URI = process.env.MONGODB_URI;
-const DB = process.env.MONGODB_DB ?? "crimescape";
+const DB = process.env.MONGODB_DB ?? "athena";
 
 if (!URI) {
   console.error("✖ MONGODB_URI is required. Example:");

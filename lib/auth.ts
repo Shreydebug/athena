@@ -63,7 +63,7 @@ function fallbackSave<T>(file: string, rows: T[]): void {
     mkdirSync(VAR_DIR, { recursive: true });
     writeFileSync(file, JSON.stringify(rows, null, 2));
   } catch (e) {
-    console.warn("[crimescape] could not persist to disk:", (e as Error).message);
+    console.warn("[athena] could not persist to disk:", (e as Error).message);
   }
 }
 

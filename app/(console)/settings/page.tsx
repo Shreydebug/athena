@@ -5,10 +5,10 @@ import { Panel, SectionHeader, Tag } from "@/components/ui/Panel";
 
 export default function SettingsPage() {
   const [accent, setAccent] = useState(
-    () => (typeof window !== "undefined" ? (localStorage.getItem("crimescape-accent") ?? "#00F5D4") : "#00F5D4"),
+    () => (typeof window !== "undefined" ? (localStorage.getItem("athena-accent") ?? "#00F5D4") : "#00F5D4"),
   );
   const [reducedMotion, setReducedMotion] = useState(
-    () => typeof window !== "undefined" && localStorage.getItem("crimescape-reduced-motion") === "1",
+    () => typeof window !== "undefined" && localStorage.getItem("athena-reduced-motion") === "1",
   );
   const [source, setSource] = useState("seed");
   const [records, setRecords] = useState(0);
@@ -26,7 +26,7 @@ export default function SettingsPage() {
       "--accent-var-soft",
       accent + "24",
     );
-    localStorage.setItem("crimescape-accent", accent);
+    localStorage.setItem("athena-accent", accent);
   }, [accent]);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function SettingsPage() {
     } else {
       document.documentElement.classList.remove("motion-reduced");
     }
-    localStorage.setItem("crimescape-reduced-motion", reducedMotion ? "1" : "0");
+    localStorage.setItem("athena-reduced-motion", reducedMotion ? "1" : "0");
   }, [reducedMotion]);
 
   const ACCENTS = ["#00F5D4", "#8B5CF6", "#FFD166", "#FF4D6D", "#38BDF8", "#F472B6"];

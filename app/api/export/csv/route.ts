@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
   return new Response("\uFEFF" + csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `attachment; filename="crimescape-${crime}-${from}-${to}.csv"`,
+      "Content-Disposition": `attachment; filename="athena-${crime}-${from}-${to}.csv"`,
     },
   });
 }

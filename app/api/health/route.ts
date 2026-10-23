@@ -8,7 +8,7 @@ export async function GET() {
   const store = await getStore();
   return NextResponse.json({
     status: "ok",
-    service: "crimescape-api",
+    service: "athena-api",
     version: "1.0.0",
     source: store.source,
     records: store.records.length,

@@ -14,10 +14,10 @@ map = map.replace(
 );
 
 if (!html.includes("<!--__INDIA_MAP__-->")) throw new Error("map placeholder missing");
-if (!html.includes("/*__CRIMESCAPE_DATA__*/")) throw new Error("data placeholder missing");
+if (!html.includes("/*__ATHENA_DATA__*/")) throw new Error("data placeholder missing");
 
 html = html.replace("<!--__INDIA_MAP__-->", map);
-html = html.replace("/*__CRIMESCAPE_DATA__*/", `const DATA = ${JSON.stringify(data)};`);
+html = html.replace("/*__ATHENA_DATA__*/", `const DATA = ${JSON.stringify(data)};`);
 
 fs.writeFileSync(deckPath, html);
 console.log("injected map bytes", map.length, "data bytes", JSON.stringify(data).length, "deck bytes", html.length);

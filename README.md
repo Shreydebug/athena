@@ -1,7 +1,7 @@
-# CRIMESCAPE — India's Crime Intelligence & Analytics Platform
+# ATHENA — Crime Against Women in India, 2001–2021
 
-A neo-intelligence console for exploring, comparing and forecasting crime trends across
-India (NCRB crimes against women, 2001–2021).
+An analytics console for exploring, comparing and forecasting crime statistics
+against women in India (NCRB crimes against women dataset, 2001–2021).
 
 Dark futuristic UI · synchronized visualizations · India heat map · timeline playback ·
 compare mode · auto-generated intelligence briefs · search · export.

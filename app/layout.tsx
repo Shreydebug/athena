@@ -34,7 +34,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "ATHENA — India Crime Intelligence Platform",
+  "# ATHENA — Crime Against Women in India, 2001–2021",
   description:
     "Neo intelligence console for exploring, comparing and forecasting crime trends across India (2001–2021).",
 };

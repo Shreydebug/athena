@@ -1,5 +1,5 @@
 /**
- * CRIMESCAPE ETL — Stage 1: Normalize raw CSV into seed JSON.
+ * ATHENA ETL — Stage 1: Normalize raw CSV into seed JSON.
  *
  * Raw CSV is NEVER served directly (spec §15). This script:
  *  - parses the raw CSV

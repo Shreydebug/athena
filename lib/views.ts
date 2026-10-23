@@ -36,7 +36,7 @@ function saveViews(userId: string, rows: SavedView[]) {
     mkdirSync(VAR_DIR, { recursive: true });
     writeFileSync(join(VAR_DIR, `views-${userId}.json`), JSON.stringify(rows, null, 2));
   } catch (e) {
-    console.warn("[crimescape] could not persist views:", (e as Error).message);
+    console.warn("[athena] could not persist views:", (e as Error).message);
   }
 }
 

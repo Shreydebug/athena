@@ -29,10 +29,10 @@ async function connectMongo(): Promise<Db | null> {
       });
       await client.connect();
     }
-    db = client.db(process.env.MONGODB_DB ?? "crimescape");
+    db = client.db(process.env.MONGODB_DB ?? "athena");
     return db;
   } catch {
-    console.warn("[crimescape] MongoDB unreachable — falling back to seed data");
+    console.warn("[athena] MongoDB unreachable — falling back to seed data");
     client = null;
     return null;
   }

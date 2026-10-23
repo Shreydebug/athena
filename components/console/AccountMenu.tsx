@@ -16,7 +16,7 @@ interface SavedView {
   createdAt: number;
 }
 
-const LS_KEY = "crimescape-views";
+const LS_KEY = "athena-views";
 
 type Tab = "closed" | "account" | "views";
 

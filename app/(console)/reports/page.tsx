@@ -20,7 +20,7 @@ export default function ReportsPage() {
   const [saved, setSaved] = useState<SavedReport[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      return JSON.parse(localStorage.getItem("crimescape-reports") ?? "[]") as SavedReport[];
+      return JSON.parse(localStorage.getItem("athena-reports") ?? "[]") as SavedReport[];
     } catch {
       return [];
     }
@@ -53,7 +53,7 @@ export default function ReportsPage() {
       });
       const a = document.createElement("a");
       a.href = png;
-      a.download = `crimescape-report-${crime}-${from}-${to}.png`;
+      a.download = `athena-report-${crime}-${from}-${to}.png`;
       a.click();
       const rec: SavedReport = {
         id: String(Date.now()),
@@ -63,7 +63,7 @@ export default function ReportsPage() {
       };
       const next = [rec, ...saved].slice(0, 12);
       setSaved(next);
-      localStorage.setItem("crimescape-reports", JSON.stringify(next));
+      localStorage.setItem("athena-reports", JSON.stringify(next));
     } finally {
       setBusy(null);
     }
@@ -72,7 +72,7 @@ export default function ReportsPage() {
   const remove = (id: string) => {
     const next = saved.filter((s) => s.id !== id);
     setSaved(next);
-    localStorage.setItem("crimescape-reports", JSON.stringify(next));
+    localStorage.setItem("athena-reports", JSON.stringify(next));
   };
 
   const csvUrl = `/api/export/csv?from=${from}&to=${to}${crime !== "all" ? `&crime=${crime}` : ""}`;

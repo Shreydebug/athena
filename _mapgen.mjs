@@ -2,7 +2,9 @@ import fs from "node:fs";
 import nodePath from "node:path";
 import { geoConicEqualArea, geoPath } from "d3-geo";
 
-const root = "C:/Users/Shubhankar/Desktop/projects/crime analytics/crimescape";
+import { fileURLToPath } from "node:url";
+
+const root = nodePath.dirname(fileURLToPath(import.meta.url));
 const geo = JSON.parse(fs.readFileSync(nodePath.join(root, "public/india-states.geojson"), "utf8"));
 const recs = JSON.parse(fs.readFileSync(nodePath.join(root, "lib/data/records.json"), "utf8"));
 const byState = {};
